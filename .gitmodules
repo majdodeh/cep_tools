@@ -7,6 +7,8 @@
 [submodule "src/newlib"]
 	path = src/newlib
 	url = git://git-sls.imag.fr/gnu_tools/newlib.git
+	branch = remotes/origin/ensimag-cep
 [submodule "src/qemu"]
 	path = src/qemu
 	url = git://git-sls.imag.fr/qemu
+	branch = remotes/origin/ensimag-cep

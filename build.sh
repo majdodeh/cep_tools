@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TARGET=mipsel-elf
+TARGET=mips-elf
 
 PREFIX=
 SRC_DIR="$PWD"/src
@@ -374,6 +374,12 @@ if [ $USE_SYSTEM_MPC == n ]; then
 	build $MPC "--prefix=$PREFIX $MPC_ADDITIONAL_PARAM" "" install
 	append_to GCC_ADDITIONAL_PARAM "--with-mpc=$PREFIX"
 fi
+
+cd src/newlib
+git checkout -b ensimag-cep remotes/origin/ensimag-cep
+cd ../../src/qemu
+git checkout -b ensimag-cep remotes/origin/ensimag-cep
+cd ../../
 
 build $BINUTILS "--target=$TARGET
                  --prefix=$PREFIX
