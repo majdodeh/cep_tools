@@ -1,0 +1,75 @@
+= Information pour construire les outils du cours de CEP =
+
+*Note* Les outils utilisés ne sont pas présents dans le git de CEP mais sont
+fournis sous forme de sous-modules git. Ces derniers sont hébergés sur le
+serveur git de l'équipe SLS du laboratoire TIMA. Ils sont tous accessibles en
+lecture depuis l'Internet. En revanche, si vous voulez effectuer des
+modifications dans QEMU ou la newlib (les deux projets modifiés pour CEP),
+vous pouvez soumettre un patch à Olivier Muller qui l'intégrera pour vous.
+
+Dans le reste du document, on notera ``$git'' la racine du dépôt de CEP sur votre
+machine.
+
+Pour tous les outils, on décidera d'un prefix (chemin d'installation) commun,
+noté ``$PREFIX'' dans le reste du document. Si vous construisez les outils pour
+un usage personnel (tests, préparation des TPs, ...), mieux vaut choisir un
+emplacement dans votre $HOME (ie. $HOME/local), supprimable à souhait si les
+choses tournent mal. Adaptez ensuite votre ``$PATH'' pour pointer vers
+``$PREFIX/bin''.
+
+Avant toutes choses, il est nécessaire de cloner les git des différents outils
+(à faire seulement la première fois).
+
+	$ cd $git
+	$ git pull
+	$ git submodule update --init
+
+Cette opération peut prendre du temps...
+
+----------------------------
+Pour construire les outils
+----------------------------
+
+Se placer dans le dossier $git/tools et executer le script build.sh
+en lui spécifiant le prefix choisi.
+
+	$ cd $git
+	$ git pull
+	$ git submodule update		# On s'assure que les sous-modules sont à jour
+	$ cd $git/tools
+	$ ./build.sh --prefix $PREFIX
+
+Executez le script avec ``--help'' pour obtenir une aide détaillée sur son utilisation.
+
+Certaines dépendances sont peut-être nécessaires pour construire gcc et autres.
+Si le processus de compilation échoue pour vous, merci d'éditer ce fichier en
+rajoutant les paquets à installer pour votre distribution pour résoudre le
+problème (ex: Debian, apt-get install toto titi ...).
+
+Dépendances pour Debian
+-----------------------
+
+$ apt-get install libsdl1.2-dev
+
+Dépendances pour Ubuntu
+-----------------------
+
+$ apt-get install build-essential flex bison texinfo libncurses5-dev libpixman-1-dev
+
+Dépendances pour MacOS X
+------------------------
+
+Le script s'occupera de télécharger et compiler les bibliothèques nécessaires à
+la compilation de GCC.  En revanche, QEMU a besoin de pkg-config, glib et
+pixman qui ne sont pas disponible sur MacOS X par défaut.  Une solution simple
+consiste à utiliser un gestionnaire de paquets alternatif comme Homebrew
+(http://brew.sh/) (Il en existe d'autres comme Fink ou MacPorts).  Suivez les
+instructions présentes sur le site pour l'installer, puis lancez les commandes
+suivantes :
+	$ brew doctor	# A lancer la 1ere fois juste
+			# après l'installation d'Homebrew.
+			# Suivez les recommandations pour régler les
+			# éventuels problèmes.
+	$ brew install pkg-config
+	$ brew install glib
+	$ brew install pixman
